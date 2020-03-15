@@ -1,8 +1,22 @@
 # Castor Whispers
 
-An utility to comment each paragraph individually in a Markdown file.
+An utility to work with markdown text files.
 
 ## Usage
+
+```cmd
+USAGE:
+    castor_whispers.exe [SUBCOMMAND]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+SUBCOMMANDS:
+    comment           Comment all paragraphs
+    help              Prints this message or the help of the given subcommand(s)
+    only-commented    Get only commented paragraphs
+```
 
 File : input.md
 
@@ -21,7 +35,7 @@ fn main() {
 }
 
 fn print_example() {
-    println!("This is an exemple.");
+    println!("This is an example.");
 }
 ```
 
@@ -32,7 +46,7 @@ Donec maximus gravida ipsum ac sollicitudin. Cras feugiat ac diam suscipit ullam
 Then, type in your CLI :
 
 ```cmd
-castor-whispers input.md
+castor-whispers comment input.md
 ```
 
 It will print on your screen :
@@ -59,7 +73,7 @@ fn main() {
 }
 
 fn print_example() {
-    println!("This is an exemple.");
+    println!("This is an example.");
 }
 ```
 -->
@@ -73,5 +87,5 @@ Donec maximus gravida ipsum ac sollicitudin. Cras feugiat ac diam suscipit ullam
 You can type this command in your CLI to save this result in `output.md` file :
 
 ```cmd
-castor-whispers input.md > output.md
+castor-whispers comment input.md > output.md
 ```
