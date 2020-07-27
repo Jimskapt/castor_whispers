@@ -1,6 +1,6 @@
 // TODO : refactor in order to use string slices ?
 pub fn comment(input_content: &str) -> String {
-	let search_code_delemiter = regex::Regex::new(r"(`+``+)").unwrap();
+	let search_code_delemiter = regex::Regex::new("(``+`)").unwrap();
 
 	let lines: Vec<&str> = input_content.trim().split('\n').collect();
 

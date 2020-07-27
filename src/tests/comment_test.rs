@@ -1,7 +1,7 @@
 use crate::comment::comment;
 
 #[test]
-fn comment_only_paragraphs() {
+fn nnha23zjqp6qi() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, maiores rerum.
 
@@ -32,7 +32,7 @@ facere esse praesentium necessitatibus rerum quod assumenda!
 }
 
 #[test]
-fn comment_only_paragraphs_with_end_newline() {
+fn is5kenpe6c2ipltq47m() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, maiores rerum.
 
@@ -54,7 +54,7 @@ quis sunt ad autem et ratione ut mollitia doloribus, amet at!
 }
 
 #[test]
-fn comment_only_paragraphs_with_end_newlines() {
+fn iacvt746t1weu() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, maiores rerum.
 
@@ -79,7 +79,7 @@ quis sunt ad autem et ratione ut mollitia doloribus, amet at!
 }
 
 #[test]
-fn comment_paragraphs_with_code_block() {
+fn bgz4euhwg5b7g3itmvyo7cd() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, maiores rerum.
 
@@ -124,7 +124,7 @@ facere esse praesentium necessitatibus rerum quod assumenda!
 }
 
 #[test]
-fn comment_paragraph_with_inline_code() {
+fn t2003bxt1su887yvira2es() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, ```dolor sit amet consectetur adipisicing elit``` maiores
 rerum."#;
@@ -139,7 +139,7 @@ rerum.
 }
 
 #[test]
-fn comment_paragraphs_with_comment_block() {
+fn mxxzip6b8zy0r() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, maiores rerum.
 
@@ -176,7 +176,7 @@ facere esse praesentium necessitatibus rerum quod assumenda!
 }
 
 #[test]
-fn comment_paragraph_with_inline_comment() {
+fn q1ncbpo6v1x5issbi3v6m() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
 quibusdam nesciunt, <!-- dolor sit amet consectetur adipisicing elit --> maiores
 rerum."#;
@@ -191,7 +191,7 @@ rerum.
 }
 
 #[test]
-fn comment_paragraph_with_inline_comment_end_like() {
+fn idl3u6gvf3rrwaeabwn3y() {
 	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit.
 --> Modi sit ad eos sequi quibusdam nesciunt, maiores rerum."#;
 
