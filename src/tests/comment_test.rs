@@ -28,7 +28,10 @@ consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
 facere esse praesentium necessitatibus rerum quod assumenda!
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -50,7 +53,10 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
 quis sunt ad autem et ratione ut mollitia doloribus, amet at!
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -75,7 +81,10 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
 quis sunt ad autem et ratione ut mollitia doloribus, amet at!
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -120,7 +129,10 @@ consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
 facere esse praesentium necessitatibus rerum quod assumenda!
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -135,7 +147,10 @@ quibusdam nesciunt, ```dolor sit amet consectetur adipisicing elit``` maiores
 rerum.
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -172,7 +187,10 @@ consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
 facere esse praesentium necessitatibus rerum quod assumenda!
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -187,7 +205,10 @@ quibusdam nesciunt, <!-- dolor sit amet consectetur adipisicing elit -- > maiore
 rerum.
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
 }
 
 #[test]
@@ -200,5 +221,79 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit.
 -- > Modi sit ad eos sequi quibusdam nesciunt, maiores rerum.
 -->"#;
 
-	assert_eq!(comment(input), expected);
+	assert_eq!(
+		comment(input, &crate::settings::Settings::default()),
+		expected
+	);
+}
+
+#[test]
+fn comment_only_paragraphs_with_simple_replacement() {
+	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
+quibusdam nesciunt, maiores rerum.
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus eum,
+consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
+facere esse praesentium necessitatibus rerum quod assumenda!"#;
+
+	let expected = r#"<!--
+TEST ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
+quibusdam nesciunt, maiores rerum.
+-->
+
+<!--
+TEST ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!
+-->
+
+<!--
+TEST ipsum dolor sit amet consectetur adipisicing elit. Doloribus eum,
+consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
+facere esse praesentium necessitatibus rerum quod assumenda!
+-->"#;
+
+	let mut settings = crate::settings::Settings::default();
+	settings.replacements.comment = Some(vec![(String::from("Lorem"), String::from("TEST"))]);
+
+	assert_eq!(comment(input, &settings), expected);
+}
+
+#[test]
+fn comment_only_paragraphs_with_regex_replacement() {
+	let input = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
+quibusdam nesciunt, maiores rerum.
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus eum,
+consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
+facere esse praesentium necessitatibus rerum quod assumenda!"#;
+
+	let expected = r#"<!--
+Lorem ipsum dolor sit amet consectetur TEST. Modi sit ad eos sequi NEWLINE
+quibusdam nesciunt, maiores rerum.
+-->
+
+<!--
+Lorem ipsum dolor sit amet consectetur TEST. Numquam, illum nam NEWLINE
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!
+-->
+
+<!--
+Lorem ipsum dolor sit amet consectetur TEST. Doloribus eum, NEWLINE
+consequatur est minus nemo deserunt voluptates accusantium numquam modi soluta
+facere esse praesentium necessitatibus rerum quod assumenda!
+-->"#;
+
+	let mut settings = crate::settings::Settings::default();
+	settings.replacements.comment = Some(vec![(
+		String::from("adipisicing elit\\. (.+)"),
+		String::from("TEST. $1 NEWLINE"),
+	)]);
+
+	assert_eq!(comment(input, &settings), expected);
 }

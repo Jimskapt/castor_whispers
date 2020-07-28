@@ -1,8 +1,16 @@
 // TODO : refactor in order to use string slices ?
-pub fn comment(input_content: &str) -> String {
+pub fn comment(input_content: &str, settings: &crate::settings::Settings) -> String {
 	let search_code_delemiter = regex::Regex::new(r"(`+``+)").unwrap();
 
 	let lines: Vec<&str> = input_content.trim().split('\n').collect();
+
+	if let Some(comments) = &settings.replacements.comment {
+		for (search, _) in comments {
+			if let Err(e) = regex::Regex::new(&search) {
+				eprintln!("Error while parsing regex {} : {}", search, e);
+			}
+		}
+	}
 
 	let mut new_content = String::new();
 
@@ -47,7 +55,19 @@ pub fn comment(input_content: &str) -> String {
 			}
 		}
 
-		new_content.push_str(line.replace("-->", "-- >").as_str());
+		let mut temp = String::from(line);
+
+		if let Some(comments) = &settings.replacements.comment {
+			for (search, replace) in comments {
+				if let Ok(rgx) = regex::Regex::new(&search) {
+					temp = rgx.replace_all(&temp, replace.as_str()).to_string();
+				}
+			}
+		}
+
+		temp = temp.replace("-->", "-- >");
+
+		new_content.push_str(temp.as_str());
 		new_content.push_str("\n");
 
 		previous = Some(line.trim());
