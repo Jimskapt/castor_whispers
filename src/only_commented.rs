@@ -7,7 +7,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 	if let Some(comments) = &settings.replacements.only_commented {
 		for (search, _) in comments {
-			if let Err(e) = regex::Regex::new(&search) {
+			if let Err(e) = regex::Regex::new(search) {
 				eprintln!("Error while parsing regex {} : {}", search, e);
 			}
 		}
@@ -18,6 +18,14 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 	let mut status: ParseStatus = ParseStatus::None;
 	let start_comment = "<!--";
 	for line in lines {
+		if let Some(ignore_rows) = &settings.ignore_rows {
+			if let Some(only_commented) = &ignore_rows.only_commented {
+				if only_commented.contains(&String::from(line)) { // TODO : allow REGEX here ?
+					continue;
+				}
+			}
+		}
+
 		let start_search = line.find(start_comment);
 		let close_search = line.find("-->");
 
@@ -37,7 +45,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 									if let Some(comments) = &settings.replacements.only_commented {
 										for (search, replace) in comments {
-											if let Ok(rgx) = regex::Regex::new(&search) {
+											if let Ok(rgx) = regex::Regex::new(search) {
 												temp = rgx
 													.replace_all(&temp, replace.as_str())
 													.to_string();
@@ -67,7 +75,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 								if let Some(comments) = &settings.replacements.only_commented {
 									for (search, replace) in comments {
-										if let Ok(rgx) = regex::Regex::new(&search) {
+										if let Ok(rgx) = regex::Regex::new(search) {
 											temp = rgx
 												.replace_all(&temp, replace.as_str())
 												.to_string();
@@ -88,7 +96,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 							if let Some(comments) = &settings.replacements.only_commented {
 								for (search, replace) in comments {
-									if let Ok(rgx) = regex::Regex::new(&search) {
+									if let Ok(rgx) = regex::Regex::new(search) {
 										temp = rgx.replace_all(&temp, replace.as_str()).to_string();
 									}
 								}
@@ -111,7 +119,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 								if let Some(comments) = &settings.replacements.only_commented {
 									for (search, replace) in comments {
-										if let Ok(rgx) = regex::Regex::new(&search) {
+										if let Ok(rgx) = regex::Regex::new(search) {
 											temp = rgx
 												.replace_all(&temp, replace.as_str())
 												.to_string();
@@ -137,7 +145,7 @@ pub fn only_commented(input_content: &str, settings: &crate::settings::Settings)
 
 								if let Some(comments) = &settings.replacements.only_commented {
 									for (search, replace) in comments {
-										if let Ok(rgx) = regex::Regex::new(&search) {
+										if let Ok(rgx) = regex::Regex::new(search) {
 											temp = rgx
 												.replace_all(&temp, replace.as_str())
 												.to_string();

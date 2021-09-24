@@ -89,3 +89,8 @@ You can type this command in your CLI to save this result in `output.md` file :
 ```cmd
 castor-whispers comment input.md > output.md
 ```
+
+## Settings
+
+Please read `struct Settings` in `/src/settings.rs` file to write your `./castor_whispers.conf.toml` config file.
+An example exists in `/castor_whispers.conf.toml` in this repository.

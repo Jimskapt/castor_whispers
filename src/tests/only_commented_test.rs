@@ -361,3 +361,40 @@ quis sunt ad autem et ratione ut mollitia doloribus, amet at!"#;
 
 	assert_eq!(only_commented(input, &settings), expected);
 }
+
+#[test]
+fn ignore_markdownlint_disable() {
+	let input = r#"<!-- markdownlint-disable -->
+<!--
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
+quibusdam nesciunt, maiores rerum.
+-->
+
+<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. -->
+
+<!--
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!
+-->
+<!-- markdownlint-restore -->"#;
+
+	let expected = r#"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sit ad eos sequi
+quibusdam nesciunt, maiores rerum.
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit.
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, illum nam
+quis sunt ad autem et ratione ut mollitia doloribus, amet at!"#;
+
+	let mut settings = crate::settings::Settings::default();
+	settings.ignore_rows = Some(
+		crate::settings::SettingsIgnoreRows{
+			only_commented: Some(vec![
+				String::from("<!-- markdownlint-disable -->"),
+				String::from("<!-- markdownlint-restore -->"),
+			])
+		}
+	);
+
+	assert_eq!(only_commented(input, &settings), expected);
+}

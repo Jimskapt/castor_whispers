@@ -6,7 +6,7 @@ pub fn comment(input_content: &str, settings: &crate::settings::Settings) -> Str
 
 	if let Some(comments) = &settings.replacements.comment {
 		for (search, _) in comments {
-			if let Err(e) = regex::Regex::new(&search) {
+			if let Err(e) = regex::Regex::new(search) {
 				eprintln!("Error while parsing regex {} : {}", search, e);
 			}
 		}
@@ -59,7 +59,7 @@ pub fn comment(input_content: &str, settings: &crate::settings::Settings) -> Str
 
 		if let Some(comments) = &settings.replacements.comment {
 			for (search, replace) in comments {
-				if let Ok(rgx) = regex::Regex::new(&search) {
+				if let Ok(rgx) = regex::Regex::new(search) {
 					temp = rgx.replace_all(&temp, replace.as_str()).to_string();
 				}
 			}
@@ -68,7 +68,7 @@ pub fn comment(input_content: &str, settings: &crate::settings::Settings) -> Str
 		temp = temp.replace("-->", "-- >");
 
 		new_content.push_str(temp.as_str());
-		new_content.push_str("\n");
+		new_content.push('\n');
 
 		previous = Some(line.trim());
 	}

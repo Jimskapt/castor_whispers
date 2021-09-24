@@ -1,11 +1,11 @@
 [package]
 name = "castor_whispers"
-version = "3.2.0"
+version = "3.3.0"
 authors = ["Jimskapt <rami.programmer@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-clap = "^2"
-regex = "^1"
-serde = { version = "^1", features = ["derive"] }
-toml = "^0"
+clap = "2.*"
+regex = "1.*"
+serde = { version = "1.*", features = ["derive"] }
+toml = "0.5.*"
